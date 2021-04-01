@@ -8,13 +8,13 @@ import { useStylesSignIn } from "../../pages/SignIn/styles";
 
 interface ModalBlockProps {
   title: string;
-  children: React.ReactNode;
-  classes?: ReturnType<typeof useStylesSignIn>;
-  visible?: boolean;
   onClose: () => void;
+  classes?: ReturnType<typeof useStylesSignIn>;
+  visible: boolean;
+  children: React.ReactNode;
 }
 
-export const ModalBlock: React.FC<ModalBlockProps> = ({
+const ModalBlock: React.FC<ModalBlockProps> = ({
   title,
   onClose,
   visible = false,
@@ -40,3 +40,5 @@ export const ModalBlock: React.FC<ModalBlockProps> = ({
     </Dialog>
   );
 };
+
+export default ModalBlock;
