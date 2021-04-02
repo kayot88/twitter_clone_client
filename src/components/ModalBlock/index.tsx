@@ -7,7 +7,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { useStylesSignIn } from "../../pages/SignIn/styles";
 
 interface ModalBlockProps {
-  title: string;
+  title?: string;
   onClose: () => void;
   classes?: ReturnType<typeof useStylesSignIn>;
   visible: boolean;

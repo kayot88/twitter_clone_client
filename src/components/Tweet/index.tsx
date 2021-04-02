@@ -28,50 +28,45 @@ const Tweet: React.FC<TweetProps> = ({
       className={classNames(classes.tweet, classes.tweetsHeader)}
       variant="outlined"
     >
-      <Grid container spacing={3}>
-        <Grid item xs={1}>
-          <Avatar
-            className={classes.tweetAvatar}
-            alt={`Аватарка пользователя ${user.fullname}`}
-            src={user.avatarUrl}
-          />
-        </Grid>
-        <Grid item xs={11}>
-          <Typography>
-            <b>{user.fullname}</b>&nbsp;
-            <span className={classes.tweetUserName}>@{user.username}</span>
-            &nbsp;
-            <span className={classes.tweetUserName}>·</span>&nbsp;
-            <span className={classes.tweetUserName}>1 ч</span>
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            {text}
-          </Typography>
-          <div className={classes.tweetFooter}>
-            <div>
-              <IconButton>
-                <CommentIcon style={{ fontSize: 20 }} />
-              </IconButton>
-              <span>1</span>
-            </div>
-            <div>
-              <IconButton>
-                <RepostIcon style={{ fontSize: 20 }} />
-              </IconButton>
-            </div>
-            <div>
-              <IconButton>
-                <LikeIcon style={{ fontSize: 20 }} />
-              </IconButton>
-            </div>
-            <div>
-              <IconButton>
-                <ShareIcon style={{ fontSize: 20 }} />
-              </IconButton>
-            </div>
+      <Avatar
+        className={classes.tweetAvatar}
+        alt={`Аватарка пользователя ${user.fullname}`}
+        src={user.avatarUrl}
+      />
+      <div>
+        <Typography>
+          <b>{user.fullname}</b>&nbsp;
+          <span className={classes.tweetUserName}>@{user.username}</span>&nbsp;
+          <span className={classes.tweetUserName}>·</span>&nbsp;
+          <span className={classes.tweetUserName}>1 ч</span>
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          {text}
+        </Typography>
+        <div className={classes.tweetFooter}>
+          <div>
+            <IconButton>
+              <CommentIcon style={{ fontSize: 20 }} />
+            </IconButton>
+            <span>1</span>
           </div>
-        </Grid>
-      </Grid>
+          <div>
+            <IconButton>
+              <RepostIcon style={{ fontSize: 20 }} />
+            </IconButton>
+          </div>
+          <div>
+            <IconButton>
+              <LikeIcon style={{ fontSize: 20 }} />
+            </IconButton>
+          </div>
+          <div>
+            <IconButton>
+              <ShareIcon style={{ fontSize: 20 }} />
+            </IconButton>
+          </div>
+        </div>
+      </div>
     </Paper>
   );
 };
