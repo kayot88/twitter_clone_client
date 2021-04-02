@@ -7,11 +7,11 @@ import IconButton from "@material-ui/core/IconButton";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import EmojiIcon from "@material-ui/icons/SentimentSatisfiedOutlined";
-import { useHomeStyles } from "../../pages/Home/theme";
+import { useHomeStyles } from "../../pages/Home/styles";
 
 interface AddTweetFormProps {
   classes: ReturnType<typeof useHomeStyles>;
-  maxRows?: number;
+  maxRows?: number | undefined;
 }
 
 const MAX_LENGTH = 280;
@@ -20,19 +20,18 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({
   classes,
   maxRows,
 }: AddTweetFormProps): React.ReactElement => {
-  const [text, setText] = React.useState<string>("");
-  const textLimitPercent = Math.round((text.length / 280) * 100);
+  const [text, setText] = React.useState("");
+
+  const textLimitPercent = Math.round((text.length / MAX_LENGTH) * 100);
   const textCount = MAX_LENGTH - text.length;
 
-  const handleChangeTextare = (
-    e: React.FormEvent<HTMLTextAreaElement>
-  ): void => {
+  const handleChangeTextarea = (e: React.FormEvent<HTMLTextAreaElement>) => {
     if (e.currentTarget) {
       setText(e.currentTarget.value);
     }
   };
 
-  const handleClickAddTweet = (): void => {
+  const handleClickAddTweet = () => {
     setText("");
   };
 
@@ -45,7 +44,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({
           src="https://pbs.twimg.com/profile_images/796061890451542016/J-O1AguD_bigger.jpg"
         />
         <TextareaAutosize
-          onChange={handleChangeTextare}
+          onChange={handleChangeTextarea}
           className={classes.addFormTextarea}
           placeholder="Что происходит?"
           value={text}
@@ -73,18 +72,18 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({
               <div className={classes.addFormCircleProgress}>
                 <CircularProgress
                   variant="static"
-                  size={20}
-                  thickness={5}
+                  size={22}
+                  thickness={8}
                   value={text.length >= MAX_LENGTH ? 100 : textLimitPercent}
                   style={
                     text.length >= MAX_LENGTH ? { color: "red" } : undefined
                   }
                 />
                 <CircularProgress
-                  style={{ color: "rgba(0, 0, 0, 0.1)" }}
+                  style={{ color: "rgba(194, 22, 22, 0.1)" }}
                   variant="static"
-                  size={20}
-                  thickness={5}
+                  size={22}
+                  thickness={8}
                   value={100}
                 />
               </div>

@@ -11,12 +11,15 @@ import SearchIcon from "@material-ui/icons/SearchOutlined";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import {
+  Tweet,
+  SideMenu,
+  AddTweetForm,
+  SearchTextField,
+} from "../../components";
+import { useHomeStyles } from "../Home/styles";
 
-import { Tweet, SideMenu, AddTweetForm } from "../../components";
-import { SearchTextField } from "../Home/styles";
-import { useHomeStyles } from "../Home/theme";
-
-const Home = () => {
+const Home = (): React.ReactElement => {
   const classes = useHomeStyles();
 
   return (
@@ -144,4 +147,4 @@ const Home = () => {
   );
 };
 
-export default Home
+export default Home;
