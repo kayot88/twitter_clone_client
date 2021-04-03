@@ -1,26 +1,34 @@
-import React from "react";
 import { Container, Grid, Paper, Typography } from "@material-ui/core";
-import ListItem from "@material-ui/core/ListItem/ListItem";
-import Divider from "@material-ui/core/Divider/Divider";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar/Avatar";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
-import List from "@material-ui/core/List/List";
 import Button from "@material-ui/core/Button/Button";
-import SearchIcon from "@material-ui/icons/SearchOutlined";
+import Divider from "@material-ui/core/Divider/Divider";
+import List from "@material-ui/core/List/List";
+import ListItem from "@material-ui/core/ListItem/ListItem";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
+import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
-import CircularProgress from "@material-ui/core/CircularProgress";
-
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ClipLoader from "react-spinners/ClipLoader";
 import {
-  Tweet,
-  SideMenu,
   AddTweetForm,
   SearchTextField,
+  SideMenu,
+  Tweet,
 } from "../../components";
 import { useHomeStyles } from "../Home/styles";
+import { FetchTweets } from "../../ducks/tweets";
+import { tweetsSelect, StatusTweetSelect } from "./../../ducks/tweets";
 
 const Home = (): React.ReactElement => {
   const classes = useHomeStyles();
+  const tweets = useSelector(tweetsSelect);
+  const status = useSelector(StatusTweetSelect);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(FetchTweets());
+  }, [FetchTweets]);
 
   return (
     <Container className={classes.wrapper} maxWidth="lg">
@@ -40,20 +48,18 @@ const Home = (): React.ReactElement => {
               <div className={classes.addFormBottomLine} />
             </Paper>
 
-            {[
-              ...new Array(20).fill(
+            {status === "LOADING" ? (
+              <ClipLoader />
+            ) : (
+              tweets.map((item) => (
                 <Tweet
-                  text="Петиция чтобы в каждой пачке сухариков всегда лежал один большой в три слоя обсыпанный химическими специями царь-сухарик."
-                  user={{
-                    fullname: "Glafira Zhur",
-                    username: "GlafiraZhur",
-                    avatarUrl:
-                      "https://images.unsplash.com/photo-1528914457842-1af67b57139d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80",
-                  }}
+                  key={item._id}
+                  text={item.text}
+                  user={item.user}
                   classes={classes}
                 />
-              ),
-            ]}
+              ))
+            )}
           </Paper>
         </Grid>
         <Grid item xs={3}>
