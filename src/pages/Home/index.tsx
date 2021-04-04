@@ -17,18 +17,20 @@ import {
   Tweet,
 } from "../../components";
 import { useHomeStyles } from "../Home/styles";
-import { FetchTweets } from "../../ducks/tweets";
-import { tweetsSelect, StatusTweetSelect } from "./../../ducks/tweets";
+import { FethcTweets } from "../../ducks/tweets";
+import { RootState } from "ducks/store";
+// import Tweet from './../../components/Tweet/index';
 
 const Home = (): React.ReactElement => {
   const classes = useHomeStyles();
-  const tweets = useSelector(tweetsSelect);
-  const status = useSelector(StatusTweetSelect);
   const dispatch = useDispatch();
-
+  const { items, loadingStatus } = useSelector(
+    (state: RootState) => state.items
+  );
+  console.log(items);
   useEffect(() => {
-    dispatch(FetchTweets());
-  }, [FetchTweets]);
+    dispatch(FethcTweets());
+  }, [FethcTweets]);
 
   return (
     <Container className={classes.wrapper} maxWidth="lg">
@@ -48,10 +50,10 @@ const Home = (): React.ReactElement => {
               <div className={classes.addFormBottomLine} />
             </Paper>
 
-            {status === "LOADING" ? (
+            {loadingStatus === "LOADING" ? (
               <ClipLoader />
             ) : (
-              tweets.map((item) => (
+              items.map((item: any) => (
                 <Tweet
                   key={item._id}
                   text={item.text}

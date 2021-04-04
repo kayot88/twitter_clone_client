@@ -1,27 +1,27 @@
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { combineReducers } from "redux";
-import { tweetsReducer } from "./tweets";
-import createSagaMiddleware from "redux-saga";
-import { TweetsState } from '../ducks/tweets';
 import { all } from "@redux-saga/core/effects";
-import tweetsSaga from "./tweets";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import logger from "redux-logger";
+import createSagaMiddleware from "redux-saga";
+import tweetsSaga, { tweetsReducer } from "./tweets";
 
 const sagaMiddleware = createSagaMiddleware();
-export const rootReducer = combineReducers({
-  tweets: tweetsReducer,
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export const store = configureStore({
+  reducer: {
+    items: tweetsReducer,
+  },
+  middleware: [
+    ...getDefaultMiddleware({ thunk: false }),
+    sagaMiddleware,
+    logger,
+  ] as const,
 });
-const composedEnhancers = composeWithDevTools(applyMiddleware(sagaMiddleware));
-
-export const store = createStore(rootReducer, composedEnhancers);
-
-export interface rootState{
-  tweets: TweetsState
-}
-
 
 sagaMiddleware.run(rootSaga);
 
 export default function* rootSaga() {
   yield all([tweetsSaga()]);
 }
+ 
