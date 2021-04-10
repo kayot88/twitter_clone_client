@@ -7,24 +7,18 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
-import { tweetsApi } from "ducks/tweets";
 import React, { useEffect } from "react";
 import { AddTweetForm, SearchTextField, SideMenu } from "../../components";
 import { useHomeStyles } from "../Home/styles";
-import { useAsync } from "./../../ducks/store";
+import Tweets from 'ducks/Tweets'
+
+
 
 const Home = (): React.ReactElement => {
   const classes = useHomeStyles();
-  const { error, result, loading, run } = useAsync(tweetsApi);
-  console.log("result", result);
-  
-  useEffect(() => {
-    run()
-  }, [run]);
-
   return (
     <Container className={classes.wrapper} maxWidth="lg">
-
+      <Tweets />
       <Grid container spacing={3}>
         <Grid item xs={3}>
           <SideMenu classes={classes} />
