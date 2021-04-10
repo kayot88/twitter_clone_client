@@ -1,27 +1,32 @@
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { combineReducers } from "redux";
-import { tweetsReducer } from "./tweets";
-import createSagaMiddleware from "redux-saga";
-import { TweetsState } from '../ducks/tweets';
-import { all } from "@redux-saga/core/effects";
-import tweetsSaga from "./tweets";
+import { useCallback, useState } from "react";
 
-const sagaMiddleware = createSagaMiddleware();
-export const rootReducer = combineReducers({
-  tweets: tweetsReducer,
-});
-const composedEnhancers = composeWithDevTools(applyMiddleware(sagaMiddleware));
-
-export const store = createStore(rootReducer, composedEnhancers);
-
-export interface rootState{
-  tweets: TweetsState
-}
+// type UseToggle<T> = [T[], (item: any) => void, (items?: T[]) => void];                               type UseToggle<T> = [T[], (item: any) => void, (items?: T[]) => void];
 
 
-sagaMiddleware.run(rootSaga);
+export const useAsync = ( asyncFunction : any) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [result, setResult] = useState(null);
 
-export default function* rootSaga() {
-  yield all([tweetsSaga()]);
-}
+// console.log("result", );
+
+  const run = useCallback(
+    async (...params) => {
+      try {
+        setLoading(true);
+        const response = await asyncFunction(...params);
+        console.log("response from async", response);
+        setResult(response);
+      } catch (e) {
+        setError(e);
+      }
+      setLoading(false);
+    },
+    [asyncFunction]
+  );
+
+  return { error, result, loading, run };
+};
+
+
+

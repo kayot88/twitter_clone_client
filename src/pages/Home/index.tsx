@@ -7,31 +7,24 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import PersonAddIcon from "@material-ui/icons/PersonAddOutlined";
+import { tweetsApi } from "ducks/tweets";
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import ClipLoader from "react-spinners/ClipLoader";
-import {
-  AddTweetForm,
-  SearchTextField,
-  SideMenu,
-  Tweet,
-} from "../../components";
+import { AddTweetForm, SearchTextField, SideMenu } from "../../components";
 import { useHomeStyles } from "../Home/styles";
-import { FetchTweets } from "../../ducks/tweets";
-import { tweetsSelect, StatusTweetSelect } from "./../../ducks/tweets";
+import { useAsync } from "./../../ducks/store";
 
 const Home = (): React.ReactElement => {
   const classes = useHomeStyles();
-  const tweets = useSelector(tweetsSelect);
-  const status = useSelector(StatusTweetSelect);
-  const dispatch = useDispatch();
-
+  const { error, result, loading, run } = useAsync(tweetsApi);
+  console.log("result", result);
+  
   useEffect(() => {
-    dispatch(FetchTweets());
-  }, [FetchTweets]);
+    run()
+  }, [run]);
 
   return (
     <Container className={classes.wrapper} maxWidth="lg">
+
       <Grid container spacing={3}>
         <Grid item xs={3}>
           <SideMenu classes={classes} />
@@ -48,7 +41,7 @@ const Home = (): React.ReactElement => {
               <div className={classes.addFormBottomLine} />
             </Paper>
 
-            {status === "LOADING" ? (
+            {/* {status === "LOADING" ? (
               <ClipLoader />
             ) : (
               tweets.map((item) => (
@@ -59,7 +52,7 @@ const Home = (): React.ReactElement => {
                   classes={classes}
                 />
               ))
-            )}
+            )} */}
           </Paper>
         </Grid>
         <Grid item xs={3}>
