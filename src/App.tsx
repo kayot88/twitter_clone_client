@@ -1,19 +1,18 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
-import { Home } from "./pages";
-import { SignIn } from "./pages";
+import { AsyncSelectComponent } from "./components/asyncSelect/AsyncSelect";
 
 function App() {
   return (
     <div className="App">
-      <Switch>
+      <AsyncSelectComponent />
+      {/* <Switch>
         <Route path="/signin">
           <SignIn />
         </Route>
         <Route path="/">
           <Home />
         </Route>
-      </Switch>
+      </Switch> */}
     </div>
   );
 }
